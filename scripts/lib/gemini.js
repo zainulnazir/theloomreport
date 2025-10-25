@@ -79,7 +79,6 @@ export const generateImage = async ({ prompt, model = config.geminiImageModel })
   const response = await result.response;
   const parts = response.candidates?.flatMap((candidate) => candidate.content?.parts || []) || [];
   const imagePart = parts.find((part) => part.inlineData?.data);
-
   if (!imagePart) {
     throw new Error("Gemini response did not include image data.");
   }
