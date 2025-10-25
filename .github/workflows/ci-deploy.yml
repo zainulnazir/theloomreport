@@ -35,7 +35,9 @@ jobs:
         run: npm run build
 
       - name: Disable Jekyll processing
-        run: touch _site/.nojekyll
+        run: |
+          mkdir -p _site
+          touch _site/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
