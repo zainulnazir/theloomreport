@@ -10,12 +10,12 @@ eleventyExcludeFromCollections: true
     <link>{{ site.domain }}</link>
     <atom:link href="{{ site.domain }}/feed.xml" rel="self" type="application/rss+xml" />
     {% if collections.posts | length %}
-      {% set latestPost = collections.posts | first %}
-      {% set lastBuildDate = latestPost.date.toUTCString() %}
+      {% for latestPost in collections.posts | slice(0, 1) %}
+        <lastBuildDate>{{ latestPost.date.toUTCString() }}</lastBuildDate>
+      {% endfor %}
     {% else %}
-      {% set lastBuildDate = global.buildTime %}
+      <lastBuildDate>{{ global.buildTime }}</lastBuildDate>
     {% endif %}
-    <lastBuildDate>{{ lastBuildDate }}</lastBuildDate>
     {% for post in collections.posts %}
       <item>
         <title>{{ post.data.title }}</title>
