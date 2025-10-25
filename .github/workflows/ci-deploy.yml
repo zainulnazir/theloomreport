@@ -47,6 +47,8 @@ jobs:
     steps:
       - name: Configure Pages
         uses: actions/configure-pages@v3
+        with:
+          static_site_generator: static
 
       - name: Deploy to GitHub Pages
         id: deploy
