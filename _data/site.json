@@ -1,0 +1,16 @@
+{
+  "title": "TheLoomReport",
+  "description": "Daily loom of AI insights, trends, and analyses woven into a digestible expert publication.",
+  "domain": "https://theloomreport.page",
+  "author": "TheLoomReport Editorial",
+  "email": "editor@theloomreport.com",
+  "social": {
+    "twitter": "https://twitter.com/theloomreport",
+    "github": "https://github.com/zainulnazir/theloomreport"
+  },
+  "newsletter": {
+    "fromEmail": "digest@theloomreport.com",
+    "fromName": "TheLoomReport",
+    "subjectPrefix": "TheLoomReport Digest"
+  }
+}

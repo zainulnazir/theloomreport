@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% set site = site or {} %}
+    {% set meta = meta or {} %}
+    {% seoHead meta %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="/feed.xml" />
+    <script>
+      (() => {
+        const storageKey = "tlr-theme";
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+        const stored = localStorage.getItem(storageKey);
+        const theme = stored === "light" || stored === "dark" ? stored : (media.matches ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    {% include "components/header.njk" %}
+    <main class="page-shell">
+      {{ content | safe }}
+    </main>
+    {% include "components/footer.njk" %}
+    <script>
+      (() => {
+        const storageKey = "tlr-theme";
+        const root = document.documentElement;
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+        const applyTheme = (theme) => {
+          root.dataset.theme = theme;
+          root.style.colorScheme = theme;
+        };
+
+        const toggle = document.querySelector('[data-theme-toggle]');
+        if (toggle) {
+          const label = toggle.querySelector('[data-theme-toggle-label]');
+          const setPressed = (theme) => toggle.setAttribute('aria-pressed', theme === 'dark');
+          const updateAccessibility = (theme) => {
+            toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+            if (label) label.textContent = theme === 'dark' ? 'Dark mode' : 'Light mode';
+          };
+          const setVisualState = (theme) => {
+            toggle.dataset.themeState = theme;
+            updateAccessibility(theme);
+          };
+
+          const syncToggle = (theme) => {
+            setPressed(theme);
+            setVisualState(theme);
+          };
+
+          syncToggle(root.dataset.theme);
+
+          toggle.addEventListener('click', () => {
+            const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            syncToggle(next);
+            localStorage.setItem(storageKey, next);
+          });
+        }
+
+        if (typeof media.addEventListener === 'function') {
+          media.addEventListener('change', (event) => {
+            if (!localStorage.getItem(storageKey)) {
+              const next = event.matches ? 'dark' : 'light';
+              applyTheme(next);
+              if (toggle) {
+                toggle.setAttribute('aria-pressed', next === 'dark');
+                toggle.dataset.themeState = next;
+                const label = toggle.querySelector('[data-theme-toggle-label]');
+                if (label) label.textContent = next === 'dark' ? 'Dark mode' : 'Light mode';
+                toggle.setAttribute('aria-label', next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+              }
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% set site = site or {} %}
+    {% set meta = meta or {} %}
+    {% seoHead meta %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="/feed.xml" />
+    <script>
+      const storageKey = "tlr-theme";
+      const storedTheme = localStorage.getItem(storageKey);
+      const darkPreference = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const theme = storedTheme || (darkPreference ? "dark" : "light");
+      document.documentElement.dataset.theme = theme;
+      if (theme === "dark") {
+        document.addEventListener("DOMContentLoaded", () => document.body.classList.add("dark"));
+      }
+    </script>
+  </head>
+  <body>
+    {% include "components/header.njk" %}
+    <main>
+      {{ content | safe }}
+    </main>
+    {% include "components/footer.njk" %}
+    <script>
+      const toggle = document.querySelector('[data-theme-toggle]');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          document.body.classList.toggle('dark');
+          const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
+          localStorage.setItem('tlr-theme', theme);
+        });
+      }
+    </script>
+  </body>
+</html>

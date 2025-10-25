@@ -1,0 +1,18 @@
+---
+layout: base.njk
+title: Topics
+meta:
+  title: "Topics"
+  description: "Browse TheLoomReport by the themes driving AI forward."
+---
+<h1>Topics</h1>
+<p>Explore ongoing coverage areas across research, infrastructure, policy, and product acceleration.</p>
+
+<section class="grid grid-3">
+  {% for tag in collections.tagList %}
+    <article class="card">
+      <h2><a href="/topics/{{ tag | slug }}/">#{{ tag }}</a></h2>
+      <p>{{ collections[tag] | length }} articles</p>
+    </article>
+  {% endfor %}
+</section>

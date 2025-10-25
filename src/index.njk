@@ -1,0 +1,108 @@
+---
+layout: base.njk
+meta:
+  title: "Frontier intelligence on AI"
+  description: "Daily AI intelligence, strategy insights, and research recaps woven by TheLoomReport."
+  type: "website"
+---
+<section class="hero">
+  <span class="hero-badge">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M8 4v4M12 4v4M16 4v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </svg>
+    Daily loom briefing
+  </span>
+  <h1>Woven intelligence for the AI frontier</h1>
+  <p class="hero-lede">Every morning, TheLoomReport spins a fresh briefing on AI breakthroughs, research, and market impact—crafted by agents, curated by humans.</p>
+  <div class="hero-actions">
+    <a href="/subscribe/" class="btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m5 7 7 5 7-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        <path d="M4 6h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6" fill="none" />
+      </svg>
+      Subscribe to the digest
+    </a>
+    <a href="/topics/" class="btn btn-ghost">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 5h14M5 12h14M5 19h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </svg>
+      Explore topics
+    </a>
+  </div>
+  <ul class="hero-highlights">
+    <li>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m5 12 4 4 10-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      </svg>
+      Tactical insights distilled from the latest research drops.
+    </li>
+    <li>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 4h14a1 1 0 0 1 1 1v14l-8-3-8 3V5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round" />
+      </svg>
+      Weekly digest summarizing what matters for operators.
+    </li>
+    <li>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" fill="none" />
+      </svg>
+      Human-in-the-loop editorial control with responsible AI guardrails.
+    </li>
+  </ul>
+</section>
+
+<section class="newsletter-callout">
+  <div class="newsletter-callout__content">
+    <span class="newsletter-callout__badge">Weekly Loom</span>
+    <h2>Join the weekly loom</h2>
+    <p>Every Monday we deliver the forces shaping AI—no noise, just field intelligence tailored for builders and operators.</p>
+    <ul class="newsletter-callout__points">
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m5 12 4 4 10-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </svg>
+        Strategic brief on regulation, funding, and platform shifts.
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 4h14a1 1 0 0 1 1 1v14l-8-3-8 3V5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round" />
+        </svg>
+        Curated research drops and product launches worth tracking.
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" fill="none" />
+        </svg>
+        Operator playbook with responsible AI guardrails.
+      </li>
+    </ul>
+  </div>
+  <div class="newsletter-callout__form">
+    {% set variant = "callout" %}
+    {% include "components/subscribe-form.njk" %}
+    {% set variant = "stack" %}
+  </div>
+</section>
+
+<section class="feature-section">
+  <header>
+    <h2>Latest dispatches</h2>
+  </header>
+  <div class="post-list">
+    {% for post in collections.posts | slice(0, 6) %}
+      <article class="post-item">
+        <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+        <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
+        <p>{{ post.data.description }}</p>
+        <ul class="tags">
+          {% for tag in post.data.tags %}
+            <li>#{{ tag }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endfor %}
+  </div>
+</section>

@@ -1,0 +1,47 @@
+name: Weekly Newsletter
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+env:
+  NODE_ENV: production
+
+jobs:
+  newsletter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate weekly digest
+        run: node scripts/generate_digest.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEWSLETTER_UNSUBSCRIBE_URL: ${{ secrets.NEWSLETTER_UNSUBSCRIBE_URL }}
+
+      - name: Upload digest artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: digest-${{ github.run_id }}
+          path: dist/newsletter/
+          if-no-files-found: warn
+
+      - name: Send newsletter via SendGrid
+        run: node scripts/send_newsletter.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
+          NEWSLETTER_RECIPIENTS: ${{ secrets.NEWSLETTER_RECIPIENTS }}
+          NEWSLETTER_UNSUBSCRIBE_URL: ${{ secrets.NEWSLETTER_UNSUBSCRIBE_URL }}
