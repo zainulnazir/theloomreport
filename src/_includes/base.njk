@@ -12,8 +12,9 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="/feed.xml" />
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | url }}" />
+    <link rel="icon" href="{{ '/assets/favicon.svg' | url }}" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="{{ '/feed.xml' | url }}" />
     <script>
       (() => {
         const storageKey = "tlr-theme";

@@ -6,8 +6,8 @@
     {% seoHead meta %}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="/feed.xml" />
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | url }}" />
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="{{ '/feed.xml' | url }}" />
     <script>
       const storageKey = "tlr-theme";
       const storedTheme = localStorage.getItem(storageKey);

@@ -3,13 +3,16 @@ layout: layouts/base.njk
 ---
 <article>
   <header class="hero">
-    <p><a href="/topics/">← Back to topics</a></p>
+    <p><a href="{{ '/topics/' | url }}">← Back to topics</a></p>
     <h1>{{ title }}</h1>
     <p>{{ description }}</p>
     <p>
       <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
       {% if tags %}
-        · {% for tag in tags %}<a href="/topics/{{ tag | slug }}/">#{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+        {{ " · " }}
+        {% for tag in tags %}
+          <a href="{{ '/topics/' | url }}{{ tag | slug }}/">#{{ tag }}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
       {% endif %}
     </p>
   </header>
@@ -17,9 +20,9 @@ layout: layouts/base.njk
   {% if hero and hero.image %}
     <figure>
       <img
-        src="{{ hero.image }}"
+        src="{{ hero.image | url }}"
         {% if hero.sources %}
-          srcset="{% for source in hero.sources %}{{ source.src }} {{ source.width }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+          srcset="{% for source in hero.sources %}{{ source.src | url }} {{ source.width }}w{% if not loop.last %}, {% endif %}{% endfor %}"
           sizes="(min-width: 1024px) 1200px, 100vw"
         {% endif %}
         alt="{{ hero.alt }}"

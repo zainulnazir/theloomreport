@@ -6,6 +6,12 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addWatchTarget("src/assets/css/main.css");
 
+  const repo = process.env.GITHUB_REPOSITORY || "";
+  const [owner = "", repoName = ""] = repo.split("/");
+  const isUserOrOrgSite = repoName && repoName.toLowerCase() === `${owner.toLowerCase()}.github.io`;
+  const defaultPathPrefix = repoName && !isUserOrOrgSite ? `/${repoName}` : "";
+  const pathPrefix = process.env.ELEVENTY_PATH_PREFIX ?? defaultPathPrefix;
+
   const normalizeDate = (value) => {
     if (!value) return null;
     if (value instanceof Date) return value;
@@ -66,8 +72,8 @@ module.exports = function(eleventyConfig) {
     const site = this.ctx.site || {};
     const pageTitle = title ? `${title} · ${site.title || "TheLoomReport"}` : site.title;
     const metaDescription = description || site.description;
-  const canonicalUrl = url || `${site.domain || "https://theloomreport.page"}${this.page.url}`;
-  const imageUrl = image || `${site.domain || "https://theloomreport.page"}/assets/og-default.svg`;
+    const canonicalUrl = url || `${site.domain || "https://theloomreport.page"}${this.page.url}`;
+    const imageUrl = image || `${site.domain || "https://theloomreport.page"}/assets/og-default.svg`;
     const keywordString = Array.isArray(keywords) ? keywords.join(", ") : keywords;
 
     return `
@@ -105,6 +111,7 @@ module.exports = function(eleventyConfig) {
   });
 
   return {
+    pathPrefix,
     dir: {
       input: "src",
       includes: "_includes",
@@ -112,7 +119,7 @@ module.exports = function(eleventyConfig) {
     },
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
-  templateFormats: ["njk", "md", "11ty.js"],
+    templateFormats: ["njk", "md", "11ty.js"],
     passthroughFileCopy: true
   };
 };

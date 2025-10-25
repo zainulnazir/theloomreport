@@ -11,7 +11,7 @@ meta:
 <section class="grid grid-3">
   {% for tag in collections.tagList %}
     <article class="card">
-      <h2><a href="/topics/{{ tag | slug }}/">#{{ tag }}</a></h2>
+      <h2><a href="{{ '/topics/' | url }}{{ tag | slug }}/">#{{ tag }}</a></h2>
       <p>{{ collections[tag] | length }} articles</p>
     </article>
   {% endfor %}
